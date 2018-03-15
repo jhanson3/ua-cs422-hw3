@@ -38,12 +38,14 @@ public class Barber {
 	 */
 	public void cutHair(String name) {
 		numChairsUsed--;
+		System.out.println(name + " gets a turn for a haircut.");
 		try {
 			Thread.sleep(cutTime);
 		} catch (InterruptedException e) {
 			System.out.println("ERROR: " + name + " has been interupted");
 			e.printStackTrace();
 		}
+		System.out.println(name + "'s hair has been cut!");
 		numCut++;
 	}
 	
@@ -70,7 +72,7 @@ public class Barber {
 	 */
 	public boolean isChair(String name) {
 		if (numChairsAvail > numChairsUsed) {
-			System.out.println(name + " has taken a seat.");
+			System.out.println(name + " has taken a seat to wait.");
 			numChairsUsed++;
 			return true;
 		} else {
