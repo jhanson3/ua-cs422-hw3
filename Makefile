@@ -1,11 +1,11 @@
 JFLAGS = -g
 JC = javac
 		  
-all: classes
+all: Barber
 
-default: classes
+default: Barber
 
-classes: 
+Barber: 
 	javac Barber.java BarberJobs.java Customer.java
 
 clean:
