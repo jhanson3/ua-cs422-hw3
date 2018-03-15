@@ -11,6 +11,7 @@ public class Barber {
 	
 	private int cutTime, numChairsAvail, numChairsUsed, customers;
 	private int numCut, numLeft;
+	public boolean busy;
 
 	/*
 	 * Constructor
@@ -25,6 +26,7 @@ public class Barber {
 		this.cutTime = time;
 		this.numChairsAvail = chairs;
 		this.numChairsUsed = 0;
+		this.busy = false;
 	}
 	
 	/*
@@ -37,7 +39,9 @@ public class Barber {
 	 * 	name: the customer being served
 	 */
 	public void cutHair(String name) {
-		numChairsUsed--;
+		busy = true;
+		if (numChairsUsed > 0)
+			numChairsUsed--;
 		System.out.println(name + " gets a turn for a haircut.");
 		try {
 			Thread.sleep(cutTime);
@@ -47,6 +51,7 @@ public class Barber {
 		}
 		System.out.println(name + "'s hair has been cut!");
 		numCut++;
+		busy = false;
 	}
 	
 	/*
@@ -80,5 +85,30 @@ public class Barber {
 			numLeft++;
 			return false;
 		}
+	}
+	
+	/*
+	 * isBusy
+	 * Author: Jeremiah Hanson
+	 * -----------------------------------
+	 * Purpose: checks if the barber is currently
+	 * 	cutting someones hair
+	 */
+	public boolean isBusy() {
+		return busy;
+	}
+	
+	/*
+	 * jobStats
+	 * Author: Jeremiah Hanson
+	 * -----------------------------------
+	 * Purpose: prints the barbers end-of-day
+	 * 	job stats
+	 */
+	public void jobStats() {
+		System.out.println();
+		System.out.println("The barber is done for the day");
+		System.out.println("    Number of haircuts: " + numCut);
+		System.out.println("    Number who left:    " + numLeft);
 	}
 }

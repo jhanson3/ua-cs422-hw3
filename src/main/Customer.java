@@ -28,8 +28,10 @@ public class Customer implements Runnable{
 	@Override
 	public void run() {
 		
-		if (!barber.isChair(name))
-			return;
+		if (barber.isBusy()) {
+			if (!barber.isChair(name))
+				return;
+		}
 		
 		synchronized(barber) {
 			barber.cutHair(name);

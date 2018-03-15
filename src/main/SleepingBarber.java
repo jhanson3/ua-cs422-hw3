@@ -20,8 +20,8 @@ public class SleepingBarber {
 			return;
 		} else {
 			numCustomers = Integer.parseInt(args[0]);
-			timePerCust = Integer.parseInt(args[1]);
-			timeBetweenCust = Integer.parseInt(args[2]);
+			timePerCust = Integer.parseInt(args[1])*100;
+			timeBetweenCust = Integer.parseInt(args[2])*100;
 			numChairs = Integer.parseInt(args[3]);
 		}
 		
@@ -47,9 +47,14 @@ public class SleepingBarber {
 		}
 		
 		// wait for the job to be done
-		while (!barber.jobDone()) {
-			// Do Nothing!
+		try {
+			for (int i = 0; i < numCustomers; i++) {
+				customer[i].join();
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR: broke on join");
 		}
+		barber.jobStats();
 		
 	}
 	
