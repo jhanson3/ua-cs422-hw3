@@ -1,114 +1,61 @@
 /*
- * Barber.java
+ * SleepingBarber.java
  * Author: Jeremiah Hanson
  * ----------------------------------------------------------------
- * This class gives a customer access to the barbers services
+ * This is the main class for my sleeping barber solution
  */
 
 package main;
 
-public class Barber {
-	
-	private int cutTime, numChairsAvail, numChairsUsed, customers;
-	private int numCut, numLeft;
-	public boolean busy;
+public class SleepingBarber {
 
-	/*
-	 * Constructor
-	 * Author: Jeremiah Hanson
-	 * -------------------------------------------
-	 * Parameters:
-	 * 	time: time to cut one customers hair
-	 * 	charis: number of chairs for waiting customers
-	 * 	customers: the number of customers to arrive to the shop
-	 */
-	public Barber(int time, int chairs, int customers) {
-		this.cutTime = time;
-		this.numChairsAvail = chairs;
-		this.numChairsUsed = 0;
-		this.busy = false;
-	}
+	private static int numCustomers, timePerCust, timeBetweenCust, numChairs;
+	private static Thread[] customer;
 	
-	/*
-	 * CutHair
-	 * Author: Jeremiah Hanson
-	 * -------------------------------
-	 * Purpose: the barber takes an amount
-	 * 	of time to cut hair
-	 * Parameters:
-	 * 	name: the customer being served
-	 */
-	public void cutHair(String name) {
-		busy = true;
-		if (numChairsUsed > 0)
-			numChairsUsed--;
-		System.out.println(name + " gets a turn for a haircut.");
-		try {
-			Thread.sleep(cutTime);
-		} catch (InterruptedException e) {
-			System.out.println("ERROR: " + name + " has been interupted");
-			e.printStackTrace();
-		}
-		System.out.println(name + "'s hair has been cut!");
-		numCut++;
-		busy = false;
-	}
-	
-	/*
-	 * jobDone
-	 * Author: Jeremiah Hanson
-	 * -----------------------------------
-	 * Purpose: checks if the barbers job is 
-	 * 	done
-	 */
-	public boolean jobDone() {
-		return (numCut + numLeft) == customers;
-	}
-	
-	/*
-	 * isChair
-	 * Author: Jeremiah Hanson
-	 * -----------------------------------
-	 * Purpose: checks if there is a chair
-	 * 	available to wait in, and returns the 
-	 * 	result
-	 * Parameters: 
-	 *  name: the name of the customer
-	 */
-	public boolean isChair(String name) {
-		if (numChairsAvail > numChairsUsed) {
-			System.out.println(name + " has taken a seat to wait.");
-			numChairsUsed++;
-			return true;
+	public static void main(String[] args) {
+		
+		// check to make sure there are enough arguments
+		if (args.length < 4) {
+			System.out.println("ERROR: Not enough arguments!");
+			return;
 		} else {
-			System.out.println(name + " found no chair and left.");
-			numLeft++;
-			return false;
+			numCustomers = Integer.parseInt(args[0]);
+			timePerCust = Integer.parseInt(args[1])*100;
+			timeBetweenCust = Integer.parseInt(args[2])*100;
+			numChairs = Integer.parseInt(args[3]);
 		}
+		
+		// create barber
+		Barber barber = new Barber(timePerCust, numChairs, numCustomers);
+		
+		// add all customers to the thread list
+		customer = new Thread[numCustomers];
+		for (int i = 0; i < numCustomers; i++) {
+			customer[i] = new Thread(new Customer(("Customer " + i), barber));
+		}
+	
+		// Send in the customers!!!!
+		for (int i = 0; i < customer.length; i++) {
+			try {
+				Thread.sleep(timeBetweenCust);
+				customer[i].start();
+			} catch (InterruptedException e) {
+				System.out.println("ERROR: main sleep broke");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		// wait for the job to be done
+		try {
+			for (int i = 0; i < numCustomers; i++) {
+				customer[i].join();
+			}
+		} catch (Exception e) {
+			System.out.println("ERROR: broke on join");
+		}
+		barber.jobStats();
+		
 	}
 	
-	/*
-	 * isBusy
-	 * Author: Jeremiah Hanson
-	 * -----------------------------------
-	 * Purpose: checks if the barber is currently
-	 * 	cutting someones hair
-	 */
-	public boolean isBusy() {
-		return busy;
-	}
-	
-	/*
-	 * jobStats
-	 * Author: Jeremiah Hanson
-	 * -----------------------------------
-	 * Purpose: prints the barbers end-of-day
-	 * 	job stats
-	 */
-	public void jobStats() {
-		System.out.println();
-		System.out.println("The barber is done for the day");
-		System.out.println("    Number of haircuts: " + numCut);
-		System.out.println("    Number who left:    " + numLeft);
-	}
 }
