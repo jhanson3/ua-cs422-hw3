@@ -5,12 +5,12 @@
  * This class controls a Customer
  */
 
-package main;
+
 
 public class Customer implements Runnable{
 
 	private String name;
-	Barber barber;
+	BarberJobs barber;
 	
 	/*
 	 * Constructor
@@ -20,7 +20,7 @@ public class Customer implements Runnable{
 	 * 	name: the name of the customer
 	 * 	barber: the barber
 	 */
-	public Customer(String name, Barber barb) {
+	public Customer(String name, BarberJobs barb) {
 		this.name = name;
 		this.barber = barb;
 	}
