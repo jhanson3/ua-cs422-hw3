@@ -7,7 +7,7 @@
 
 package main;
 
-public class Barber {
+public class BarberJobs {
 	
 	private int cutTime, numChairsAvail, numChairsUsed, customers;
 	private int numCut, numLeft;
@@ -22,7 +22,7 @@ public class Barber {
 	 * 	charis: number of chairs for waiting customers
 	 * 	customers: the number of customers to arrive to the shop
 	 */
-	public Barber(int time, int chairs, int customers) {
+	public BarberJobs(int time, int chairs, int customers) {
 		this.cutTime = time;
 		this.numChairsAvail = chairs;
 		this.numChairsUsed = 0;

@@ -7,7 +7,7 @@
 
 package main;
 
-public class SleepingBarber {
+public class Barber {
 
 	private static int numCustomers, timePerCust, timeBetweenCust, numChairs;
 	private static Thread[] customer;
@@ -26,7 +26,7 @@ public class SleepingBarber {
 		}
 		
 		// create barber
-		Barber barber = new Barber(timePerCust, numChairs, numCustomers);
+		BarberJobs barber = new BarberJobs(timePerCust, numChairs, numCustomers);
 		
 		// add all customers to the thread list
 		customer = new Thread[numCustomers];
