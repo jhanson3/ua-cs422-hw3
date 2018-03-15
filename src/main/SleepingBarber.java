@@ -14,6 +14,7 @@ public class SleepingBarber {
 	
 	public static void main(String[] args) {
 		
+		// check to make sure there are enough arguments
 		if (args.length < 4) {
 			System.out.println("ERROR: Not enough arguments!");
 			return;
@@ -24,15 +25,30 @@ public class SleepingBarber {
 			numChairs = Integer.parseInt(args[3]);
 		}
 		
+		// create barber
 		Barber barber = new Barber(timePerCust, numChairs, numCustomers);
 		
+		// add all customers to the thread list
 		customer = new Thread[numCustomers];
 		for (int i = 0; i < numCustomers; i++) {
 			customer[i] = new Thread(new Customer(("Customer " + i), barber));
 		}
-		
-		while (!barber.jobDone()) {
+	
+		// Send in the customers!!!!
+		for (int i = 0; i < customer.length; i++) {
+			try {
+				Thread.sleep(timeBetweenCust);
+				customer[i].start();
+			} catch (InterruptedException e) {
+				System.out.println("ERROR: main sleep broke");
+				e.printStackTrace();
+			}
 			
+		}
+		
+		// wait for the job to be done
+		while (!barber.jobDone()) {
+			// Do Nothing!
 		}
 		
 	}

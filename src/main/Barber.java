@@ -37,12 +37,14 @@ public class Barber {
 	 * 	name: the customer being served
 	 */
 	public void cutHair(String name) {
+		numChairsUsed--;
 		try {
 			Thread.sleep(cutTime);
 		} catch (InterruptedException e) {
 			System.out.println("ERROR: " + name + " has been interupted");
 			e.printStackTrace();
 		}
+		numCut++;
 	}
 	
 	/*
