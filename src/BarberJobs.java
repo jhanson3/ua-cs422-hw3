@@ -5,7 +5,7 @@
  * This class gives a customer access to the barbers services
  */
 
-package main;
+
 
 public class BarberJobs {
 	

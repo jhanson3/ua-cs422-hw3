@@ -5,7 +5,7 @@
  * This class controls a Customer
  */
 
-package main;
+
 
 public class Customer implements Runnable{
 

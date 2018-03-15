@@ -5,7 +5,7 @@
  * This is the main class for my sleeping barber solution
  */
 
-package main;
+
 
 public class Barber {
 
