@@ -52,6 +52,7 @@ public class BarberJobs {
 		System.out.println(name + "'s hair has been cut!");
 		numCut++;
 		busy = false;
+		notify();
 	}
 	
 	/*
